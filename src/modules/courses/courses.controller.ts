@@ -26,17 +26,11 @@ export class CoursesController {
         return this.coursesService.findOneCourse(id)
     }
 
-    @Post()
-    @Roles(Role.Admin)
-    @UseGuards(RolesGuard)
-    create(
-        @Body() createCourseDto: CreateCourseDto,
-    ) {
-        return this.coursesService.createCourse(createCourseDto)
-    }
-
     @Delete(':id')
-    async delete(@Param('id', ParseUUIDPipe) id: string, @Res() res: Response): Promise<Response> {
+    async delete(
+        @Param('id', ParseUUIDPipe) id: string,
+        @Res() res: Response
+    ): Promise<Response> {
         await this.coursesService.deleteCourse(id)
         return res.status(410).json({ message: 'Course deleted successfully' })
     }
@@ -49,5 +43,14 @@ export class CoursesController {
     ): Promise<Response> {
         await this.coursesService.updateCourse(id, updateCourseDto);
         return res.status(410).json({ message: 'Course updated successfully' })
+    }
+
+    @Post()
+    @Roles(Role.Admin)
+    @UseGuards(RolesGuard)
+    create(
+        @Body() createCourseDto: CreateCourseDto,
+    ) {
+        return this.coursesService.createCourse(createCourseDto)
     }
 }

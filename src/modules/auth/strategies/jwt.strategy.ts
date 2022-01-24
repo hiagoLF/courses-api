@@ -21,6 +21,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
     async validate(payload: JwtAuthenticationPayload) {
         const user = await this.usersService.findOneOrFail(payload.sub)
+        console.log('Passando por aqui')
         return { id: user.id, email: user.email, roles: JSON.parse(user.roles) }
     }
 }
