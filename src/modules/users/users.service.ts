@@ -22,7 +22,6 @@ export class UsersService {
 
     async findOneOrFail(id: string) {
         const user = await this.userModel.findOne({ where: { id }, attributes: { exclude: ['password'] } })
-        console.log(user)
         if (!user) throw new NotFoundException('User not found')
         return user
     }
